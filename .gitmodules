@@ -1,0 +1,3 @@
+[submodule "vendor/aimas"]
+	path = vendor/aimas
+	url = https://github.com/ezz-ae/AIMAS
