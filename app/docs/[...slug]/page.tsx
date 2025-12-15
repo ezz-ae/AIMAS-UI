@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import path from "node:path";
 
+import { ShellLayout } from "@/components/shell/ShellLayout";
 import { getAllDocSlugs, getDocBySlug } from "@/lib/docs";
 import { renderMarkdownToHtml } from "@/lib/markdown";
 
@@ -19,59 +20,52 @@ export default async function DocPage({ params }: { params: { slug: string[] } }
   const ext = path.extname(doc.sourcePath).toLowerCase();
   const isMarkdown = ext === ".md" || ext === ".mdx";
   const html = isMarkdown ? await renderMarkdownToHtml(doc.body) : null;
+  const apiBase = process.env.NEXT_PUBLIC_AIMAS_API_BASE || "";
 
   return (
-    <main className="min-h-[calc(100vh-64px)]">
-      <section className="mx-auto max-w-6xl px-6 py-12">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_260px]">
-          <article>
-            <div className="flex items-center justify-between gap-4">
-              <Link href="/docs" className="text-xs text-neutral-500 hover:text-neutral-900">
-                ← Docs index
-              </Link>
-              <div className="text-xs font-mono text-neutral-500">{doc.section}</div>
-            </div>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight">{doc.title}</h1>
-            <div className="mt-2 text-xs text-neutral-500">source: {doc.sourcePath}</div>
+    <ShellLayout section="docs" apiBase={apiBase} title={doc.title} subtitle={`source: ${doc.sourcePath}`}>
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_260px]">
+        <article>
+          <Link href="/docs" className="text-xs text-neutral-400 hover:text-white">
+            ← Docs index
+          </Link>
+          <div className="mt-8">
+            {isMarkdown ? (
+              <div dangerouslySetInnerHTML={{ __html: html! }} />
+            ) : (
+              <pre className="text-xs overflow-x-auto rounded-2xl border border-white/10 bg-black/30 p-4">
+                {doc.body}
+              </pre>
+            )}
+          </div>
+        </article>
 
-            <div className="mt-8">
-              {isMarkdown ? (
-                <div dangerouslySetInnerHTML={{ __html: html! }} />
-              ) : (
-                <pre className="text-xs overflow-x-auto rounded-2xl border bg-neutral-50 p-4">
-                  {doc.body}
-                </pre>
-              )}
-            </div>
-          </article>
-
-          <aside className="space-y-6">
-            <div className="rounded-2xl border p-4">
-              <div className="text-xs text-neutral-500">doc id</div>
-              <div className="mt-1 font-mono text-sm break-words">{doc.id}</div>
-            </div>
-            <div className="rounded-2xl border p-4">
-              <div className="text-xs text-neutral-500">table of contents</div>
-              {doc.toc.length ? (
-                <ul className="mt-2 space-y-2 text-sm">
-                  {doc.toc.map((entry) => {
-                    const indent = entry.depth === 1 ? "pl-0" : entry.depth === 2 ? "pl-3" : "pl-6";
-                    return (
-                      <li key={entry.id} className={indent}>
-                        <a href={`#${entry.id}`} className="text-neutral-700 hover:text-neutral-900">
-                          {entry.text}
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
-              ) : (
-                <div className="mt-2 text-xs text-neutral-500">No headings.</div>
-              )}
-            </div>
-          </aside>
-        </div>
-      </section>
-    </main>
+        <aside className="space-y-6">
+          <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
+            <div className="text-xs text-neutral-400">doc id</div>
+            <div className="mt-1 font-mono text-sm break-words text-white">{doc.id}</div>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
+            <div className="text-xs text-neutral-400">table of contents</div>
+            {doc.toc.length ? (
+              <ul className="mt-2 space-y-2 text-sm">
+                {doc.toc.map((entry) => {
+                  const indent = entry.depth === 1 ? "pl-0" : entry.depth === 2 ? "pl-3" : "pl-6";
+                  return (
+                    <li key={entry.id} className={`${indent} text-neutral-300`}>
+                      <a href={`#${entry.id}`} className="hover:text-white">
+                        {entry.text}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <div className="mt-2 text-xs text-neutral-500">No headings.</div>
+            )}
+          </div>
+        </aside>
+      </div>
+    </ShellLayout>
   );
 }

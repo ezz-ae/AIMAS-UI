@@ -14,11 +14,11 @@ export function GateSearch({ initialQuery = "" }: GateSearchProps) {
   function submit() {
     const value = query.trim();
     if (!value) return;
-    router.push(`/search?q=${encodeURIComponent(value)}`);
+    router.push(`/system?q=${encodeURIComponent(value)}`);
   }
 
   return (
-    <div className="rounded-[32px] border shadow-soft p-5 bg-white">
+    <div className="rounded-[32px] border border-white/15 bg-black/40 p-5 backdrop-blur">
       <div className="flex flex-col gap-3 sm:flex-row">
         <input
           value={query}
@@ -31,18 +31,18 @@ export function GateSearch({ initialQuery = "" }: GateSearchProps) {
           }}
           placeholder="Declare intent"
           aria-label="Intent"
-          className="flex-1 rounded-2xl border px-4 py-3 text-lg outline-none focus:ring-2 focus:ring-neutral-900/30"
+          className="flex-1 rounded-2xl border border-white/15 bg-black/60 px-4 py-3 text-lg text-white outline-none focus:ring-2 focus:ring-white/30"
         />
         <button
           type="button"
           onClick={submit}
-          className="rounded-2xl bg-neutral-900 px-6 py-3 text-sm font-semibold text-white disabled:opacity-50"
+          className="rounded-2xl bg-white/90 px-6 py-3 text-sm font-semibold text-black disabled:opacity-50"
           disabled={!query.trim()}
         >
           Search →
         </button>
       </div>
-      <div className="mt-3 text-xs text-neutral-500 font-mono">No browse. Input → system.</div>
+      <div className="mt-3 text-xs text-neutral-400 font-mono">No browse. Input → system.</div>
     </div>
   );
 }

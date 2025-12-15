@@ -1,13 +1,23 @@
-Task: Add CI guardrails for zero-drift + fairness
+# Task 010 — CI Guardrails (No Drift, No Leakage)
+
+Goal:
+- Prevent boundary violations, leakage, and secret exposure across AIMAS + AIMAS-UI.
 
 Scope:
-- Repo: AIMAS-UI + optional AIMAS workflows
+- AIMAS + AIMAS-UI repos (workflows + scripts only).
 
 Requirements:
-- Ensure docs:verify, lint, build run in CI with submodules
-- Fail if vendor/aimas missing or registry empty
-- Document enforcement policy in README or /codex/runs log
+AIMAS:
+- CI verifies OpenAPI exists.
+- CI checks health/ready/live routes respond (curl against dev server).
+- Ensure no UI/framework deps creep into package.json.
 
-Output:
-- File diffs only
-- No prose
+AIMAS-UI:
+- CI runs `pnpm docs:verify`, `pnpm lint`, `pnpm build`.
+- Fail if docs source or search index missing.
+- Fail if any tracked file contains an OpenAI secret pattern (`sk-...`).
+- Ensure OpenAI adapter code is server-only (no `OPENAI_API_KEY` in client bundles).
+
+Acceptance:
+- GitHub Actions workflow blocks PR/merge on violation.
+- Guard scripts live in repo (no manual steps).

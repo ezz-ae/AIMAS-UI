@@ -79,18 +79,31 @@ let docsRootCache: string | null = null;
 
 function ensureDocsRoot(): string {
   const override = process.env.AIMAS_DOCS_PATH;
-  const root = override
+  const defaultRoot = path.join(process.cwd(), "vendor", "aimas");
+  const fallbackRoot = path.join(process.cwd(), "AIMAS");
+  const resolved = override
     ? path.resolve(process.cwd(), override)
-    : path.join(process.cwd(), "vendor", "aimas");
+    : fs.existsSync(defaultRoot)
+    ? defaultRoot
+    : fallbackRoot;
 
-  if (!fs.existsSync(root)) {
+  if (!override && resolved === defaultRoot && !hasOpenApi(defaultRoot) && fs.existsSync(fallbackRoot)) {
+    return fallbackRoot;
+  }
+
+  if (!fs.existsSync(resolved)) {
     const msg = override
-      ? `Override path ${root} does not exist.`
-      : `vendor/aimas is missing. Run \"git submodule update --init --recursive\" or set AIMAS_DOCS_PATH.`;
+      ? `Override path ${resolved} does not exist.`
+      : `Docs source missing. Run \"git submodule update --init --recursive\", ensure AIMAS/ exists, or set AIMAS_DOCS_PATH.`;
     throw new Error(`[aimas-docs] ${msg}`);
   }
 
-  return root;
+  return resolved;
+}
+
+function hasOpenApi(root: string) {
+  const candidates = ["openapi.yaml", "openapi.yml", "openapi.json"];
+  return candidates.some((name) => fs.existsSync(path.join(root, name)));
 }
 
 function maybeRefreshCache(targetRoot: string) {

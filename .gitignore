@@ -1,3 +1,14 @@
 node_modules
 .next
 public/search-index.json
+.env
+.env.*
+
+# build
+.next/
+out/
+node_modules/
+public/search-index.json
+
+# docs source feed (choose ONE strategy)
+vendor/aimas/
