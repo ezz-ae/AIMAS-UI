@@ -10,7 +10,8 @@
     "lint": "next lint",
     "docs:verify": "tsx scripts/docs-verify.ts",
     "check:secrets": "node scripts/check-secrets.mjs",
-    "prepare": "git submodule update --init --recursive"
+    "prepare": "git submodule update --init --recursive",
+    "postinstall": "git submodule update --init --recursive"
   },
   "dependencies": {
     "github-slugger": "2.0.0",
