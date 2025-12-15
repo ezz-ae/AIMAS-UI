@@ -1,27 +1,48 @@
 "use client";
+
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function GateSearch() {
-  const [q, setQ] = useState("");
+type GateSearchProps = {
+  initialQuery?: string;
+};
+
+export function GateSearch({ initialQuery = "" }: GateSearchProps) {
+  const [query, setQuery] = useState(initialQuery);
+  const router = useRouter();
+
+  function submit() {
+    const value = query.trim();
+    if (!value) return;
+    router.push(`/search?q=${encodeURIComponent(value)}`);
+  }
+
   return (
-    <div className="rounded-3xl border shadow-soft p-4">
-      <div className="flex flex-col sm:flex-row gap-3">
+    <div className="rounded-[32px] border shadow-soft p-5 bg-white">
+      <div className="flex flex-col gap-3 sm:flex-row">
         <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Declare intent…"
-          className="flex-1 rounded-2xl border px-4 py-3 outline-none focus:ring-2 focus:ring-neutral-900/20"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              submit();
+            }
+          }}
+          placeholder="Declare intent"
+          aria-label="Intent"
+          className="flex-1 rounded-2xl border px-4 py-3 text-lg outline-none focus:ring-2 focus:ring-neutral-900/30"
         />
-        <a
-          href={`/x?intent=${encodeURIComponent(q || "")}`}
-          className="rounded-2xl bg-neutral-900 text-white px-5 py-3 text-center font-medium"
+        <button
+          type="button"
+          onClick={submit}
+          className="rounded-2xl bg-neutral-900 px-6 py-3 text-sm font-semibold text-white disabled:opacity-50"
+          disabled={!query.trim()}
         >
-          Search
-        </a>
+          Search →
+        </button>
       </div>
-      <div className="mt-3 text-xs text-neutral-500">
-        Landing surface: no browsing, no ranking, no persuasion.
-      </div>
+      <div className="mt-3 text-xs text-neutral-500 font-mono">No browse. Input → system.</div>
     </div>
   );
 }

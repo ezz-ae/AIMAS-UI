@@ -3,12 +3,10 @@ import { usePathname } from "next/navigation";
 
 const LINKS = [
   ["/", "Home"],
+  ["/search", "Search"],
   ["/docs", "Docs"],
-  ["/rfc", "RFC"],
-  ["/schemas", "Schemas"],
-  ["/conformance", "Conformance"],
   ["/api", "API"],
-  ["/x", "Dashboard"],
+  ["/system", "System"],
 ];
 
 export function TopNav() {
@@ -42,8 +40,8 @@ export function TopNav() {
           })}
         </nav>
 
-        <a href="/x" className="md:hidden px-3 py-2 rounded-xl bg-neutral-900 text-white text-sm">
-          Dashboard
+        <a href="/system" className="md:hidden px-3 py-2 rounded-xl bg-neutral-900 text-white text-sm">
+          System
         </a>
       </div>
     </header>
