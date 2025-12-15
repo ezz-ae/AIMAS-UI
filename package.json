@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "docs:verify": "tsx scripts/docs-verify.ts",
-    "check:secrets": "node scripts/check-secrets.mjs"
+    "check:secrets": "node scripts/check-secrets.mjs",
+    "prepare": "git submodule update --init --recursive"
   },
   "dependencies": {
     "github-slugger": "2.0.0",
