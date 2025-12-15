@@ -3,7 +3,13 @@ import Link from "next/link";
 import { StatusIndicator } from "@/components/status-indicator";
 
 const NAV_ITEMS = [
+  { key: "overview", label: "Overview", href: "/overview" },
   { key: "system", label: "Protocol Shell", href: "/system" },
+  { key: "spec", label: "Specification", href: "/spec" },
+  { key: "tutorials", label: "Tutorials", href: "/tutorials" },
+  { key: "dev", label: "Developer Guides", href: "/dev" },
+  { key: "use-cases", label: "Use Cases", href: "/use-cases" },
+  { key: "pricing", label: "Pricing", href: "/pricing" },
   { key: "docs", label: "Docs", href: "/docs" },
   { key: "api", label: "API Reference", href: "/api" },
 ];
@@ -12,10 +18,16 @@ const SECTION_LABELS: Record<string, string> = {
   system: "Protocol Shell",
   docs: "Documentation",
   api: "API Reference",
+  overview: "Overview",
+  spec: "Specification",
+  pricing: "Pricing",
+  "use-cases": "Use Cases",
+  tutorials: "Tutorials",
+  dev: "Developer Guides",
 };
 
 type ShellLayoutProps = {
-  section: "system" | "docs" | "api";
+  section: "overview" | "system" | "spec" | "tutorials" | "dev" | "use-cases" | "pricing" | "docs" | "api";
   title?: string;
   subtitle?: string;
   apiBase?: string;

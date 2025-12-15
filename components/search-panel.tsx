@@ -24,8 +24,8 @@ export function SearchPanel({ initialQuery = "" }: { initialQuery?: string }) {
   return (
     <div className="rounded-3xl border border-white/10 bg-black/30 p-5 space-y-4">
       <div>
-        <div className="text-xs text-neutral-400 uppercase tracking-[0.3em]">search</div>
-        <p className="text-sm text-neutral-300">Intent is transient. No ranking — only routing.</p>
+        <div className="text-xs text-neutral-400 uppercase tracking-[0.3em]">internal surface</div>
+        <p className="text-sm text-neutral-300">Intent is transient. This helper mirrors the docs search index.</p>
       </div>
       <textarea
         value={query}

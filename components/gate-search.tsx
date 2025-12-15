@@ -39,10 +39,10 @@ export function GateSearch({ initialQuery = "" }: GateSearchProps) {
           className="rounded-2xl bg-white/90 px-6 py-3 text-sm font-semibold text-black disabled:opacity-50"
           disabled={!query.trim()}
         >
-          Search →
+          Enter Gate
         </button>
       </div>
-      <div className="mt-3 text-xs text-neutral-400 font-mono">No browse. Input → system.</div>
+      <div className="mt-3 text-xs text-neutral-400 font-mono">Demo only · input deleted after routing.</div>
     </div>
   );
 }

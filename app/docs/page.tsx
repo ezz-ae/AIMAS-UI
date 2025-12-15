@@ -32,6 +32,20 @@ export default async function DocsIndexPage() {
       subtitle="Read-only view of the AIMAS authority repo. No drift, no rewrites."
       apiBase={apiBase}
     >
+      <div className="mb-10 grid gap-4 md:grid-cols-3">
+        <Link href="/overview" className="rounded-3xl border border-white/10 bg-black/30 p-5 text-sm text-neutral-200">
+          <div className="text-xs font-mono text-neutral-400">Start here</div>
+          <p className="mt-2 text-white">Protocol definition and guarantees.</p>
+        </Link>
+        <Link href="/spec" className="rounded-3xl border border-white/10 bg-black/30 p-5 text-sm text-neutral-200">
+          <div className="text-xs font-mono text-neutral-400">Specification</div>
+          <p className="mt-2 text-white">Capsule + Fit Matrix contracts.</p>
+        </Link>
+        <Link href="/tutorials" className="rounded-3xl border border-white/10 bg-black/30 p-5 text-sm text-neutral-200">
+          <div className="text-xs font-mono text-neutral-400">Tutorials</div>
+          <p className="mt-2 text-white">Exact steps to call the API.</p>
+        </Link>
+      </div>
       <div className="space-y-8">
         {SECTION_ORDER.map((section) => {
           const entries = grouped.get(section) ?? [];

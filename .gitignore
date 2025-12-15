@@ -3,6 +3,7 @@ node_modules
 public/search-index.json
 .env
 .env.*
+!.env.example
 
 # build
 .next/
